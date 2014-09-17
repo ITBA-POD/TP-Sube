@@ -12,7 +12,9 @@ Descripción del problema
 - Existe un servidor central que contiene los saldos iniciales de tarjetas, registra nuevas tarjetas y recibe las actualizaciones de los saldos de las tarjetas. Este servidor central esta provisto por los profesores y tendrá una interfaz única para todos los grupos. Este servidor es lento para responder por definición.
 - El servicio a implementar viene a funcionar como un *cache* de los saldos, recibiendo operaciones de consultas, gastos y recargos sobre las tarjetas.
 - No es necesario que el servicio *cache* mantenga actualizado online al servidor central, puede utilizar la estrategia que defina para actualizar los saldos en el servidor central. 
+- El servicio **debe** estar implementado con un cluster de máquinas funcionando en forma transparente para los usuarios, mientras cumplan con las reglas de consistencia que definan.
 - El servidor central es quien registra las nuevas tarjetas, el servicio no se entera de las nuevas tarjetas hasta que se usan por los clientes.
+- Los clientes se van a conectar mediante RMI a un único *distribuidor de carga* que repartirá las operaciones entre los miembros del cluster en forma aleatoria. Los miembros del cluster que implementa el servicio *cache* deben registrarse en el *distribuidor de carga* para operar. Las invocaciones entre el balanceador y los miembros del cluster también será por RMI.
 
 Alcance
 -------
