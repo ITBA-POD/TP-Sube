@@ -16,6 +16,11 @@ Descripción del problema
 - El servidor central es quien registra las nuevas tarjetas, el servicio no se entera de las nuevas tarjetas hasta que se usan por los clientes.
 - Los clientes se van a conectar mediante RMI a un único *distribuidor de carga* que repartirá las operaciones entre los miembros del cluster en forma aleatoria. Los miembros del cluster que implementa el servicio *cache* deben registrarse en el *distribuidor de carga* para operar. Las invocaciones entre el balanceador y los miembros del cluster también será por RMI.
 - El *distribuidor de carga* está provisto por los profesores.
+- Las operaciones con las tarjetas tienen restricciones: 
+ - el saldo no puede ser menor a cero (0.01 > 0) 
+ - el monto de las recargas no puede ser mayor a 100
+ - los gastos no pueden ser mayores a 100 y menores a 1
+ - las recargas y gastos son montos con centavos (no puede ser 0.55555)
 
 Alcance
 -------
@@ -25,3 +30,22 @@ A partir de las directivas descriptas a continuación los grupos deben diseñar 
 - Tiempos de respuesta: se espera un tiempo de respuesta promedio de **50 milisegundos** cada 1000 operaciones, indepdendiente de la carga. Esa medición la realizará el balanceador de carga.
 - Si el balanceador solicita al servicio que baje todos los saldos al servidor central, esta operación debe ser sincrónica dado que apenas se complete se verificarán los saldos de las tarjetas.
 - Los grupos deben implementar tanto el servicio como el cliente que se comunicará con el servicio. Luego todos los alumnos del curso ejecutarán el cliente para generar alta carga en el servicio y verificar la consistencia.
+
+Prototipos de Interfaces Java
+-
+
+### Servidor Central
+Esta interfaz es usada por el servicio
+- consultarSaldo(idTarjeta): double (devuelve -1 si la tarjeta no existe)
+- actualizarSaldo(idTarjeta, saldo): double (devuelve -1 si la tarjeta no existe, sino el saldo)
+
+### ServicioSube
+Esta interfaz es implementada por el servicio e invocada por el balanceador
+- viajo(idTarjeta, costo): double (devuelve el saldo luego de descontar el viaje, o -1 si no se puede viajar)
+- recargo(idTarjeta, monto): double (devuelve el saldo luego de aplicar la recarga, o -1 si no se puede recargar)
+ 
+### ClienteSube extends ServicioSube
+Esta interfaz es usada por clientes, e implementada por el balanceador
+- nuevaTarjeta("nombre"): idTarjeta (registra una nueva tarjeta)
+
+
