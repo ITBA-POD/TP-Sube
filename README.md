@@ -1,11 +1,11 @@
-S.U.B.E. - Sistema Útil para Berificar Estudiantes
+S.U.B.E. - Sistema Útil para "B"erificar Estudiantes
 =======================================
 
 El objetivo de este trabajo práctico es implementar un servicio distribuído que registre operaciones de consulta, uso y carga de una supuesta tarjeta similar a la SUBE.
 
-Este trabajo práctico se realizará en grupos de 3 o 4 personas, y contará con dos entregas: una presentación del diseño de la solución y otra donde se prueba el sistema en clase. 
+Este trabajo práctico se realizará en grupos de 3 o 4 personas, y contará con tres entregas: una presentación del diseño de la solución, una prueba inicial y una presentación final del sistema en clase. 
 
-**La presentación de diseño se realizará el Lunes 29 de Septiembre y la prueba del sistema el Lunes 6 de Octubre.**
+**La presentación de diseño se realizará el Lunes 29 de Septiembre y la primera prueba del sistema el Lunes 6 de Octubre. La entrega final será el 20 de Octubre**
 
 Descripción del problema
 ------------------------
@@ -36,16 +36,21 @@ Prototipos de Interfaces Java
 
 ### Servidor Central
 Esta interfaz es usada por el servicio
-- consultarSaldo(idTarjeta): double (devuelve -1 si la tarjeta no existe)
-- actualizarSaldo(idTarjeta, saldo): double (devuelve -1 si la tarjeta no existe, sino el saldo)
+- consultarSaldo(idTarjeta): double (si es negativo ver los códigos de error)
+- actualizarSaldo(idTarjeta, saldo): double (si es negativo ver los códigos de error)
 
 ### ServicioSube
 Esta interfaz es implementada por el servicio e invocada por el balanceador
-- viajo(idTarjeta, costo): double (devuelve el saldo luego de descontar el viaje, o -1 si no se puede viajar)
-- recargo(idTarjeta, monto): double (devuelve el saldo luego de aplicar la recarga, o -1 si no se puede recargar)
+- viajo(idTarjeta, costo): double (devuelve el saldo luego de descontar el viaje, si es negativo ver los códigos de error)
+- recargo(idTarjeta, monto): double (devuelve el saldo luego de aplicar la recarga, si es negativo ver los códigos de error)
  
 ### ClienteSube extends ServicioSube
 Esta interfaz es usada por clientes, e implementada por el balanceador
 - nuevaTarjeta("nombre"): idTarjeta (registra una nueva tarjeta)
 
-
+### Códigos de error
+- **-1**: la tarjeta no existe
+- **-2**: no se puede procesar el pedido, reintente
+- **-3**: hubo un fallo en la comunicación con el servicio
+- **-4**: el saldo de la tarjeta no permite realizar la operación
+- **-5**: el servicio no respondío (timeout)
