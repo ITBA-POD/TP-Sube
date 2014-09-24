@@ -2,12 +2,15 @@ package ar.edu.itba.pod.mmxivii.sube.common;
 
 import org.apache.commons.cli.*;
 
+import javax.annotation.Nonnull;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 
 public class Utils
 {
+
+	public static final String MAX_THREADS_JAVA_PROPERTY = "sun.rmi.transport.tcp.maxConnectionThreads";
 
 	public static final int HELP_EXIT_CODE = -3;
 	public static final int PARSE_FAILED_EXIT_CODE = -4;
@@ -26,6 +29,7 @@ public class Utils
 
 	private Utils() {}
 
+	@Nonnull
 	public static Options buildOptions(String[] ... options)
 	{
 		final Options result = new Options();
@@ -41,6 +45,7 @@ public class Utils
 		return result;
 	}
 
+	@Nonnull
 	public static CommandLine parseArguments(final Options options, final String help, final String[] args) throws ParseException
 	{
 		try {
@@ -61,6 +66,21 @@ public class Utils
 		}
 	}
 
+	@Nonnull
+	public static Registry createRegistry(final int port)
+	{
+		try {
+			final Registry registry = LocateRegistry.createRegistry(port);
+			System.out.println(String.format("Created RMI Registry on %s", port));
+			return registry;
+		} catch (RemoteException e) {
+			System.err.println("Failed to create RMI Registry.  Reason: " + e.getMessage());
+			System.exit(RMI_FAILED_EXIT_CODE);
+			throw new RuntimeException(e);
+		}
+	}
+
+	@Nonnull
 	public static Registry getRegistry(final String host, final int port)
 	{
 		try {
