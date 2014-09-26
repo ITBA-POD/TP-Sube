@@ -4,6 +4,8 @@ import ar.edu.itba.pod.mmxivii.sube.common.Utils;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.Options;
 
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
 import java.rmi.registry.Registry;
 import java.util.Scanner;
 
@@ -12,6 +14,7 @@ import static ar.edu.itba.pod.mmxivii.sube.common.Utils.*;
 public class Main
 {
 	public static final String HELP = "java -jar ";
+	private static Registry registry = null;
 
 	private Main() {}
 
@@ -30,7 +33,7 @@ public class Main
 		final boolean skipDelay = Boolean.valueOf(cmdLine.getOptionValue(DELAY_O_L, FALSE));
 		Utils.skipDelay(skipDelay);
 
-		final Registry registry = createRegistry(port);
+		registry = createRegistry(port);
 
 		bindObject(registry, CARD_REGISTRY_BIND, new CardRegistryImpl());
 
@@ -45,5 +48,15 @@ public class Main
 		System.exit(0);
 	}
 
+	public static void shutdown()
+	{
+		try {
+			registry.unbind(CARD_REGISTRY_BIND);
+		} catch (RemoteException | NotBoundException e) {
+			System.err.println("Shutdown Error: " + e.getMessage());
+			System.exit(-1);
+		}
+
+	}
 }
 

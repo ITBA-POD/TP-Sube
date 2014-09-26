@@ -10,7 +10,19 @@ public class MainTest
 	@Test
 	public void testMain() throws Exception
 	{
-		Main.main(new String[] {});
+		new Thread() {
+			@Override
+			public void run()
+			{
+				try {
+					Main.main(new String[]{});
+				} catch (Exception e) {
+					throw new RuntimeException(e);
+				}
+			}
+		}.start();
 
+		Thread.sleep(1000);
+		Main.shutdown();
 	}
 }
