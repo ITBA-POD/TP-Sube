@@ -124,4 +124,27 @@ public class Utils
 			throw new RuntimeException(e);
 		}
 	}
+
+	/** Valida que el double tenga como mucho dos decimales */
+	public static void assertAmount(double amount)
+	{
+		if (Math.rint(amount * 100) != (amount * 100)) throw new IllegalArgumentException("Invalid amount " + amount);
+	}
+
+	public static String assertText(@Nonnull final String text)
+	{
+		for (int i=0; i< text.length(); i++) {
+			final char c = text.charAt(i);
+			if (!Character.isDigit(c) && !Character.isLetter(c))
+				throw new IllegalArgumentException("Invalid text " + text);
+		}
+		return text;
+	}
+
+	public static <T> T checkNotNull(T reference) {
+		if (reference == null) {
+			throw new NullPointerException();
+		}
+		return reference;
+	}
 }
