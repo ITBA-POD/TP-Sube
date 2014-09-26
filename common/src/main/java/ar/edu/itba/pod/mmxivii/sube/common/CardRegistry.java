@@ -3,6 +3,7 @@ package ar.edu.itba.pod.mmxivii.sube.common;
 import ar.edu.itba.pod.mmxivii.sube.common.model.Card;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.rmi.Remote;
 import java.rmi.server.UID;
 
@@ -15,6 +16,9 @@ public interface CardRegistry extends Remote
 	 * @return
 	 */
 	@Nonnull Card newCard(@Nonnull String cardHolder, @Nonnull String label);
+
+	@Nullable
+	Card getCard(@Nonnull UID id);
 
 	double getCardBalance(@Nonnull UID cardId);
 

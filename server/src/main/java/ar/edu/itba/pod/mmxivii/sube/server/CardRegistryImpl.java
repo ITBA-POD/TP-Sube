@@ -4,12 +4,14 @@ import ar.edu.itba.pod.mmxivii.sube.common.CardRegistry;
 import ar.edu.itba.pod.mmxivii.sube.common.model.Card;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.rmi.server.UID;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
 import static ar.edu.itba.pod.mmxivii.sube.common.Utils.assertText;
+import static ar.edu.itba.pod.mmxivii.sube.common.Utils.checkNotNull;
 
 public class CardRegistryImpl implements CardRegistry
 {
@@ -29,18 +31,26 @@ public class CardRegistryImpl implements CardRegistry
 		synchronized (cards) {
 			UID id = new UID();
 			while (cards.containsKey(id)) id = new UID();
-			System.out.println(String.format("NEW CARD: %s:%s%s", cardHolder, label, id));
+//			System.out.println(String.format("NEW CARD: %s:%s%s", cardHolder, label, id));
 
 			balances.put(id, 0d);
-			return cards.put(id, new Card(id, cardHolder, label));
+			final Card card = new Card(id, cardHolder, label);
+			cards.put(id, card);
+			return card;
 		}
 	}
 
 	@Override
-	public double getCardBalance(@Nonnull UID cardId)
+	@Nullable
+	public Card getCard(@Nonnull UID id)
 	{
+		return cards.get(checkNotNull(id));
+	}
 
-		return 0;
+	@Override
+	public double getCardBalance(@Nonnull UID id)
+	{
+		return balances.get(checkNotNull(id));
 	}
 
 	@Override

@@ -9,16 +9,14 @@ import static org.assertj.core.api.Assertions.*;
 
 public class CardTest
 {
-	public static final String TEST_LABEL = "label";
-	public static final String TEST_CARD_HOLDER = "cardHolder";
 
 	public CardTest() {}
 
 	@Test public void baseTest()
 	{
 		final UID id = new UID();
-		final String cardHolder = TEST_CARD_HOLDER;
-		final String label = TEST_LABEL;
+		final String cardHolder = TestUtils.TEST_CARD_HOLDER;
+		final String label = TestUtils.TEST_LABEL;
 		final Card card = new Card(id, cardHolder, label);
 		assertThat(card.getId()).isEqualTo(id);
 		assertThat(card.getCardHolder()).isEqualTo(cardHolder);
@@ -33,8 +31,8 @@ public class CardTest
 	@Test public void nullTest()
 	{
 		final UID id = new UID();
-		final String cardHolder = TEST_CARD_HOLDER;
-		final String label = TEST_LABEL;
+		final String cardHolder = TestUtils.TEST_CARD_HOLDER;
+		final String label = TestUtils.TEST_LABEL;
 		try {
 			new Card(null, cardHolder, label);
 			failBecauseExceptionWasNotThrown(NullPointerException.class);
@@ -53,13 +51,13 @@ public class CardTest
 	{
 		final UID id = new UID();
 		try {
-			final String label = TEST_LABEL;
-			new Card(id, TestUtils.randomString(), label);
+			final String label = TestUtils.TEST_LABEL;
+			new Card(id, TestUtils.randomInvalidString(), label);
 			failBecauseExceptionWasNotThrown(IllegalArgumentException.class);
 		} catch (IllegalArgumentException ignore) {}
 		try {
-			final String cardHolder = TEST_CARD_HOLDER;
-			new Card(id, cardHolder, TestUtils.randomString());
+			final String cardHolder = TestUtils.TEST_CARD_HOLDER;
+			new Card(id, cardHolder, TestUtils.randomInvalidString());
 			failBecauseExceptionWasNotThrown(IllegalArgumentException.class);
 		} catch (IllegalArgumentException ignore) {}
 	}
