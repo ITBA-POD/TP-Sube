@@ -1,5 +1,7 @@
 package ar.edu.itba.pod.mmxivii.sube.common;
 
+import org.assertj.core.api.Assertions;
+
 import javax.annotation.Nonnull;
 import java.rmi.server.UID;
 import java.util.Random;
@@ -34,5 +36,23 @@ public class TestUtils
 	public static String randomString(@Nonnull String prefix)
 	{
 		return prefix + new UID().toString().replaceAll(":", "").replaceAll("-", "");
+	}
+
+	public static void assertValidAmount(double amount)
+	{
+		try {
+			Utils.assertAmount(amount);
+		} catch (IllegalArgumentException e) {
+			Assertions.fail("amount should be valid: " + amount, e);
+		}
+
+	}
+
+	public static void assertInvalidAmount(double amount)
+	{
+		try {
+			Utils.assertAmount(amount);
+			Assertions.failBecauseExceptionWasNotThrown(IllegalArgumentException.class);
+		} catch (IllegalArgumentException ignore) {}
 	}
 }

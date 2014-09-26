@@ -1,5 +1,6 @@
 package ar.edu.itba.pod.mmxivii.sube.server;
 
+import ar.edu.itba.pod.mmxivii.sube.common.Utils;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.Options;
 
@@ -18,15 +19,16 @@ public class Main
 	{
 		final Options options = buildOptions(
 				new String[]{PORT_O_S, PORT_O_L, TRUE},
+				new String[]{DELAY_O_S, DELAY_O_L, TRUE},
 				new String[]{MAX_THREADS_O_S, MAX_THREADS_O_L, TRUE}
 		);
 		final CommandLine cmdLine = parseArguments(options, HELP, args);
 
 		final int port = Integer.valueOf(cmdLine.getOptionValue(PORT_O_L, PORT_O_D));
-		if (cmdLine.hasOption(MAX_THREADS_O_L)) {
-			final String maxThreads = cmdLine.getOptionValue(MAX_THREADS_O_L);
-			System.setProperty(MAX_THREADS_JAVA_PROPERTY, maxThreads);
-		}
+		final String maxThreads = cmdLine.getOptionValue(MAX_THREADS_O_L, MAX_THREADS_O_D);
+		System.setProperty(MAX_THREADS_JAVA_PROPERTY, maxThreads);
+		final boolean skipDelay = Boolean.valueOf(cmdLine.getOptionValue(DELAY_O_L, FALSE));
+		Utils.skipDelay(skipDelay);
 
 		final Registry registry = createRegistry(port);
 

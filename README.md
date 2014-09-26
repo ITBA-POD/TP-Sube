@@ -39,7 +39,7 @@ Prototipos de Interfaces Java
 ### Servidor Central
 Esta interfaz es usada por el servicio
 - consultarSaldo(idTarjeta): double (si es negativo ver los códigos de error)
-- actualizarSaldo(idTarjeta, saldo): double (si es negativo ver los códigos de error)
+- agregarOperacion(idTarjeta, descripcion, monto): double (si es negativo ver los códigos de error)
 
 ### ServicioSube
 Esta interfaz es implementada por el servicio e invocada por el balanceador

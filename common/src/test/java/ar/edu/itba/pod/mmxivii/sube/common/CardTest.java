@@ -5,6 +5,8 @@ import org.junit.Test;
 
 import java.rmi.server.UID;
 
+import static ar.edu.itba.pod.mmxivii.sube.common.TestUtils.assertInvalidAmount;
+import static ar.edu.itba.pod.mmxivii.sube.common.TestUtils.assertValidAmount;
 import static org.assertj.core.api.Assertions.*;
 
 public class CardTest
@@ -62,4 +64,19 @@ public class CardTest
 		} catch (IllegalArgumentException ignore) {}
 	}
 
+	@Test public void amountTest()
+	{
+		assertValidAmount(0d);
+		assertValidAmount(1d);
+		assertValidAmount(2d);
+		assertValidAmount(0.1d);
+		assertValidAmount(1.22d);
+
+		assertInvalidAmount(-1.001d);
+		assertInvalidAmount(0.001d);
+		assertInvalidAmount(100.001d);
+		assertInvalidAmount(-100.001d);
+		assertInvalidAmount(-100.000000001d);
+		assertInvalidAmount(100.000000001d);
+	}
 }

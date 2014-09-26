@@ -11,11 +11,17 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.Random;
 
 public class Utils
 {
 
 	public static final String MAX_THREADS_JAVA_PROPERTY = "sun.rmi.transport.tcp.maxConnectionThreads";
+	public static final int MIN_DELAY = 200;
+	public static final int MAX_DELTA = 800;
+	private static final Random RANDOM = new Random();
+	@SuppressWarnings("BooleanVariableAlwaysNegated")
+	private static boolean skipDelay = false;
 
 	public static final int HELP_EXIT_CODE = -3;
 	public static final int PARSE_FAILED_EXIT_CODE = -4;
@@ -31,6 +37,9 @@ public class Utils
 	public static final String FALSE = "FALSE";
 	public static final String MAX_THREADS_O_S = "t";
 	public static final String MAX_THREADS_O_L = "max-threads";
+	public static final String MAX_THREADS_O_D = "20";
+	public static final String DELAY_O_S = "d";
+	public static final String DELAY_O_L = "delay";
 
 	public static final String CARD_REGISTRY_BIND = "cardRegistry";
 
@@ -104,7 +113,8 @@ public class Utils
 	public static void bindObject(@Nonnull Registry registry, @Nonnull final String name, @Nonnull final Remote remote) throws AlreadyBoundException
 	{
 		try {
-			registry.bind(name, UnicastRemoteObject.exportObject(remote, 0));
+			final Remote exportObject = UnicastRemoteObject.exportObject(remote, 0);
+			registry.bind(name, exportObject);
 		} catch (RemoteException e) {
 			System.err.println("Failed to bind Remote Object in Registry. Reason: " + e.getMessage());
 			System.exit(RMI_FAILED_EXIT_CODE);
@@ -125,10 +135,10 @@ public class Utils
 		}
 	}
 
-	/** Valida que el double tenga como mucho dos decimales */
+	/** Valida que el double tenga como mucho dos decimales y su valor absoluto sea menor a 100*/
 	public static void assertAmount(double amount)
 	{
-		if (Math.rint(amount * 100) != (amount * 100)) throw new IllegalArgumentException("Invalid amount " + amount);
+		if (Math.rint(amount * 100) != (amount * 100) || Math.abs(amount) > 100) throw new IllegalArgumentException("Invalid amount " + amount);
 	}
 
 	public static String assertText(@Nonnull final String text)
@@ -146,5 +156,15 @@ public class Utils
 			throw new NullPointerException();
 		}
 		return reference;
+	}
+
+	public static void skipDelay(final boolean value)
+	{
+		skipDelay = value;
+	}
+
+	public static void delay()
+	{
+		if (!skipDelay) try { Thread.sleep(RANDOM.nextInt(MAX_DELTA) + MIN_DELAY); } catch (InterruptedException ignore) {}
 	}
 }
