@@ -4,6 +4,8 @@ import ar.edu.itba.pod.mmxivii.sube.common.CardRegistry;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.Options;
 
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
 import java.rmi.registry.Registry;
 import java.util.Scanner;
 
@@ -12,6 +14,7 @@ import static ar.edu.itba.pod.mmxivii.sube.common.Utils.*;
 public class Main
 {
 	public static final String HELP = "java -jar ";
+	private static Registry registry = null;
 
 	private Main() {}
 
@@ -31,11 +34,17 @@ public class Main
 			System.setProperty(MAX_THREADS_JAVA_PROPERTY, maxThreads);
 		}
 
-		final Registry registry = getRegistry(host, port);
+		registry = getRegistry(host, port);
 
 		System.out.println("Starting Balancer!");
 
 		final CardRegistry cardRegistry = lookupObject(registry, CARD_REGISTRY_BIND);
+
+		final CardServiceRegistryImpl cardServiceRegistry = new CardServiceRegistryImpl();
+		bindObject(registry, CARD_SERVICE_REGISTRY_BIND, cardServiceRegistry);
+
+		final CardClientImpl cardClient = new CardClientImpl(cardRegistry, cardServiceRegistry);
+		bindObject(registry, CARD_CLIENT_BIND, cardClient);
 
 		final Scanner scan = new Scanner(System.in);
 		String line;
@@ -48,5 +57,16 @@ public class Main
 
 	}
 
+	@SuppressWarnings("DuplicateStringLiteralInspection")
+	public static void shutdown()
+	{
+		try {
+			registry.unbind(CARD_SERVICE_REGISTRY_BIND);
+			registry.unbind(CARD_CLIENT_BIND);
+		} catch (RemoteException | NotBoundException e) {
+			System.err.println("Shutdown Error: " + e.getMessage());
+			System.exit(-1);
+		}
+	}
 }
 

@@ -2,7 +2,7 @@ package ar.edu.itba.pod.mmxivii.sube;
 
 import ar.edu.itba.pod.mmxivii.sube.common.CardRegistry;
 import ar.edu.itba.pod.mmxivii.sube.common.Utils;
-import ar.edu.itba.pod.mmxivii.sube.common.model.Card;
+import ar.edu.itba.pod.mmxivii.sube.common.Card;
 import ar.edu.itba.pod.mmxivii.sube.server.CardRegistryImpl;
 import com.googlecode.junittoolbox.MultithreadingTester;
 import com.googlecode.junittoolbox.RunnableAssert;
@@ -51,6 +51,29 @@ public class CardRegistryTest
 			final UID invalidId = new UID();
 			assertThat(cardRegistry.getCard(invalidId)).isNull();
 			assertThat(cardRegistry.getCardBalance(invalidId)).isEqualTo(CardRegistry.CARD_NOT_FOUND);
+		} catch (RemoteException ignored) {}
+	}
+
+	@Test public void amountsTest()
+	{
+		try {
+			final Card card = cardRegistry.newCard(TEST_CARD_HOLDER, TEST_LABEL);
+			assertThat(card).isNotNull();
+			assertThat(card.getCardHolder()).isEqualTo(TEST_CARD_HOLDER);
+
+			final double balance = cardRegistry.getCardBalance(card.getId());
+			assertThat(balance).isEqualTo(0d);
+
+			final double value = 44d;
+			final double newValue = cardRegistry.addCardOperation(card.getId(), "test", value);
+			assertThat(newValue).isEqualTo(value);
+
+			assertThat(cardRegistry.getCardBalance(card.getId())).isEqualTo(value);
+
+			assertThat(cardRegistry.addCardOperation(card.getId(), "test", 99d)).isEqualTo(CardRegistry.OPERATION_NOT_PERMITTED_BY_BALANCE);
+			assertThat(cardRegistry.addCardOperation(card.getId(), "test", -99d)).isEqualTo(CardRegistry.OPERATION_NOT_PERMITTED_BY_BALANCE);
+
+			assertThat(cardRegistry.getCardBalance(card.getId())).isEqualTo(value);
 		} catch (RemoteException ignored) {}
 	}
 

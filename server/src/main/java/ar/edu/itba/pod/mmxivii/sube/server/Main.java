@@ -48,6 +48,7 @@ public class Main
 		System.exit(0);
 	}
 
+	@SuppressWarnings("DuplicateStringLiteralInspection")
 	public static void shutdown()
 	{
 		try {

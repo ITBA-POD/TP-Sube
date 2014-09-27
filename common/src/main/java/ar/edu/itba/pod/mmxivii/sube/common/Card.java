@@ -1,4 +1,4 @@
-package ar.edu.itba.pod.mmxivii.sube.common.model;
+package ar.edu.itba.pod.mmxivii.sube.common;
 
 import javax.annotation.Nonnull;
 import java.io.Serializable;

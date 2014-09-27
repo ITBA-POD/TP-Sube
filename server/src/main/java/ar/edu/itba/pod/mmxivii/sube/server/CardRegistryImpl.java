@@ -1,7 +1,7 @@
 package ar.edu.itba.pod.mmxivii.sube.server;
 
 import ar.edu.itba.pod.mmxivii.sube.common.CardRegistry;
-import ar.edu.itba.pod.mmxivii.sube.common.model.Card;
+import ar.edu.itba.pod.mmxivii.sube.common.Card;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -14,14 +14,8 @@ public class CardRegistryImpl implements CardRegistry
 {
 	private final ConcurrentHashMap<UID, Card> cards = new ConcurrentHashMap<UID, Card>();
 	private final ConcurrentHashMap<UID, Double> balances = new ConcurrentHashMap<UID, Double>();
-//	private final Map<UID, Card> cards = new HashMap<UID, Card>();
-//	private final Map<UID, Double> balances = new HashMap<UID, Double>();
-//	private final Map<UID, Card> cards = Collections.synchronizedMap(new HashMap<UID, Card>());
-//	private final Map<UID, Double> balances = Collections.synchronizedMap(new HashMap<UID, Double>());
-	public CardRegistryImpl()
-	{
-		System.out.println("hola");
-	}
+
+	public CardRegistryImpl() {}
 
 	@Nonnull
 	@Override
@@ -29,17 +23,12 @@ public class CardRegistryImpl implements CardRegistry
 	{
 		assertText(cardHolder);
 		assertText(label);
-//		synchronized (cards) {
-			UID id = new UID();
-			while (cards.containsKey(id)) id = new UID();
-//			System.out.println(String.format("NEW CARD: %s:%s%s", cardHolder, label, id));
-
-			balances.put(id, 0d);
-			final Card card = new Card(id, cardHolder, label);
-			cards.put(id, card);
-			delay();
-			return card;
-//		}
+		final UID id = new UID();
+		balances.put(id, 0d);
+		final Card card = new Card(id, cardHolder, label);
+		cards.put(id, card);
+		delay();
+		return card;
 	}
 
 	@Override

@@ -42,6 +42,8 @@ public class Utils
 	public static final String DELAY_O_L = "delay";
 
 	public static final String CARD_REGISTRY_BIND = "cardRegistry";
+	public static final String CARD_SERVICE_REGISTRY_BIND = "cardServiceRegistry";
+	public static final String CARD_CLIENT_BIND = "cardClient";
 
 	private Utils() {}
 

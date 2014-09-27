@@ -1,7 +1,5 @@
 package ar.edu.itba.pod.mmxivii.sube.common;
 
-import ar.edu.itba.pod.mmxivii.sube.common.model.Card;
-
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.rmi.Remote;

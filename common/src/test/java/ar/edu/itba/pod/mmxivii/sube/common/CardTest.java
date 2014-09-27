@@ -1,6 +1,5 @@
 package ar.edu.itba.pod.mmxivii.sube.common;
 
-import ar.edu.itba.pod.mmxivii.sube.common.model.Card;
 import org.junit.Test;
 
 import java.rmi.server.UID;

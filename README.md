@@ -36,18 +36,18 @@ A partir de las directivas descriptas a continuación los grupos deben diseñar 
 Prototipos de Interfaces Java
 -
 
-### Servidor Central
+### Servidor Central (**CardRegistry**) - ESTA IMPLEMENTADO
 Esta interfaz es usada por el servicio
 - consultarSaldo(idTarjeta): double (si es negativo ver los códigos de error)
 - agregarOperacion(idTarjeta, descripcion, monto): double (si es negativo ver los códigos de error)
 
-### ServicioSube
+### ServicioSube (**CardService**) - ESTE ES EL QUE TIENEN QUE IMPLEMENTAR
 Esta interfaz es implementada por el servicio e invocada por el balanceador
 - viajo(idTarjeta, costo): double (devuelve el saldo luego de descontar el viaje, si es negativo ver los códigos de error)
 - recargo(idTarjeta, monto): double (devuelve el saldo luego de aplicar la recarga, si es negativo ver los códigos de error)
 - consulto(idTarjeta): double (devuelve el saldo, si es negativo ver los códigos de error)
  
-### ClienteSube extends ServicioSube
+### ClienteSube extends ServicioSube - ESTE ES QUE TIENEN QUE USAR COMO CLIENTE
 Esta interfaz es usada por clientes, e implementada por el balanceador
 - nuevaTarjeta("nombre"): idTarjeta (registra una nueva tarjeta)
 
