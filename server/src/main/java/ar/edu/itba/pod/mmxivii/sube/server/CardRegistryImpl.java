@@ -5,17 +5,24 @@ import ar.edu.itba.pod.mmxivii.sube.common.Card;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.rmi.RemoteException;
 import java.rmi.server.UID;
+import java.rmi.server.UnicastRemoteObject;
+import java.util.Collection;
 import java.util.concurrent.ConcurrentHashMap;
 
 import static ar.edu.itba.pod.mmxivii.sube.common.Utils.*;
 
-public class CardRegistryImpl implements CardRegistry
+public class CardRegistryImpl extends UnicastRemoteObject implements CardRegistry
 {
+	private static final long serialVersionUID = 2990708481011754484L;
 	private final ConcurrentHashMap<UID, Card> cards = new ConcurrentHashMap<UID, Card>();
 	private final ConcurrentHashMap<UID, Double> balances = new ConcurrentHashMap<UID, Double>();
 
-	public CardRegistryImpl() {}
+	public CardRegistryImpl() throws RemoteException
+	{
+		super();
+	}
 
 	@Nonnull
 	@Override
@@ -64,4 +71,8 @@ public class CardRegistryImpl implements CardRegistry
 		}
 	}
 
+	Collection<Card> getCards()
+	{
+		return cards.values();
+	}
 }

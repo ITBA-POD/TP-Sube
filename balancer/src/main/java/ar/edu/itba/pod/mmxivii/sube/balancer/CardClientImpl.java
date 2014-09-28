@@ -6,17 +6,20 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.rmi.RemoteException;
 import java.rmi.server.UID;
+import java.rmi.server.UnicastRemoteObject;
 
 import static ar.edu.itba.pod.mmxivii.sube.common.Utils.checkNotNull;
 import static ar.edu.itba.pod.mmxivii.sube.common.Utils.delay;
 
-public class CardClientImpl implements CardClient
+public class CardClientImpl extends UnicastRemoteObject implements CardClient
 {
+	private static final long serialVersionUID = 3498345765116694167L;
 	private final CardRegistry cardRegistry;
 	private final CardServiceRegistryImpl cardServiceRegistry;
 
-	public CardClientImpl(@Nonnull CardRegistry cardRegistry, @Nonnull CardServiceRegistryImpl cardServiceRegistry)
+	public CardClientImpl(@Nonnull CardRegistry cardRegistry, @Nonnull CardServiceRegistryImpl cardServiceRegistry) throws RemoteException
 	{
+		super();
 		this.cardRegistry = cardRegistry;
 		this.cardServiceRegistry = cardServiceRegistry;
 	}
@@ -38,22 +41,22 @@ public class CardClientImpl implements CardClient
 	}
 
 	@Override
-	public double getCardBalance(@Nonnull UID cardId) throws RemoteException
+	public double getCardBalance(@Nonnull UID id) throws RemoteException
 	{
-		return getCardService().getCardBalance(cardId);
+		return getCardService().getCardBalance(id);
 	}
 
 	@Override
-	public double travel(@Nonnull UID cardId, @Nonnull String description, double amount) throws RemoteException
+	public double travel(@Nonnull UID id, @Nonnull String description, double amount) throws RemoteException
 	{
-		return getCardService().travel(cardId, description, amount);
+		return getCardService().travel(id, description, amount);
 	}
 
 	@Override
-	public double recharge(@Nonnull UID cardId, @Nonnull String description, double amount) throws RemoteException
+	public double recharge(@Nonnull UID id, @Nonnull String description, double amount) throws RemoteException
 	{
 		// @ToDo catch de excepciones
-		return getCardService().recharge(cardId, description, amount);
+		return getCardService().recharge(id, description, amount);
 	}
 
 	private CardService getCardService()

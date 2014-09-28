@@ -21,6 +21,7 @@
         <module>server</module>
         <module>balancer</module>
         <module>client</module>
+        <module>service</module>
     </modules>
     <dependencyManagement>
         <dependencies>

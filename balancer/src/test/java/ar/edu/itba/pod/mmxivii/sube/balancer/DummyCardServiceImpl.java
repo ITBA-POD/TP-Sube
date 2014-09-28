@@ -9,19 +9,19 @@ import java.rmi.server.UID;
 public class DummyCardServiceImpl implements CardService
 {
 	@Override
-	public double getCardBalance(@Nonnull UID cardId) throws RemoteException
+	public double getCardBalance(@Nonnull UID id) throws RemoteException
 	{
 		return 0;
 	}
 
 	@Override
-	public double travel(@Nonnull UID cardId, @Nonnull String description, double amount) throws RemoteException
+	public double travel(@Nonnull UID id, @Nonnull String description, double amount) throws RemoteException
 	{
 		return 0;
 	}
 
 	@Override
-	public double recharge(@Nonnull UID cardId, @Nonnull String description, double amount) throws RemoteException
+	public double recharge(@Nonnull UID id, @Nonnull String description, double amount) throws RemoteException
 	{
 		return 0;
 	}

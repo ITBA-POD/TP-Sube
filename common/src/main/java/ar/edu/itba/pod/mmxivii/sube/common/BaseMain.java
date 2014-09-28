@@ -5,11 +5,9 @@ import org.apache.commons.cli.Options;
 
 import javax.annotation.Nonnull;
 
-import java.rmi.AlreadyBoundException;
-import java.rmi.NotBoundException;
-import java.rmi.Remote;
-import java.rmi.RemoteException;
+import java.rmi.*;
 import java.rmi.registry.Registry;
+import java.rmi.server.RemoteObject;
 
 import static ar.edu.itba.pod.mmxivii.sube.common.Utils.*;
 
@@ -56,12 +54,12 @@ public abstract class BaseMain
 		registry = Utils.createRegistry(port);
 	}
 
-	protected void bindObject(@Nonnull final String name, @Nonnull final Remote remote)
+	protected void bindObject(@Nonnull final String name, @Nonnull final RemoteObject remote)
 	{
 		try {
-			Utils.bindObject(registry, name, remote);
-		} catch (AlreadyBoundException e) {
-			e.printStackTrace();
+			registry.bind(name, remote);
+		} catch (AlreadyBoundException | RemoteException e) {
+			throw new RuntimeException(e);
 		}
 	}
 
@@ -71,8 +69,7 @@ public abstract class BaseMain
 		try {
 			return Utils.lookupObject(registry, name);
 		} catch (NotBoundException e) {
-			e.printStackTrace();
-			return null;
+			throw new RuntimeException(e);
 		}
 	}
 
@@ -85,7 +82,8 @@ public abstract class BaseMain
 			System.exit(-1);
 		}
 	}
-	protected void skipDelay()
+
+	protected void setDelay()
 	{
 		final boolean skipDelay = Boolean.valueOf(cmdLine.getOptionValue(DELAY_O_L, FALSE));
 		Utils.skipDelay(skipDelay);

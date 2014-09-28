@@ -16,7 +16,7 @@ public interface CardService extends Remote
 	 * @see #COMMUNICATIONS_FAILURE
 	 * @see #SERVICE_TIMEOUT
 	 */
-	double getCardBalance(@Nonnull UID cardId) throws RemoteException;
+	double getCardBalance(@Nonnull UID id) throws RemoteException;
 
 	/**
 	 *
@@ -29,7 +29,7 @@ public interface CardService extends Remote
 	 * @see #OPERATION_NOT_PERMITTED_BY_BALANCE
 	 * @see #SERVICE_TIMEOUT
 	 */
-	double travel(@Nonnull UID cardId, @Nonnull String description, double amount) throws RemoteException;
+	double travel(@Nonnull UID id, @Nonnull String description, double amount) throws RemoteException;
 
 	/**
 	 *
@@ -42,6 +42,6 @@ public interface CardService extends Remote
 	 * @see #OPERATION_NOT_PERMITTED_BY_BALANCE
 	 * @see #SERVICE_TIMEOUT
 	 */
-	double recharge(@Nonnull UID cardId, @Nonnull String description, double amount) throws RemoteException;
+	double recharge(@Nonnull UID id, @Nonnull String description, double amount) throws RemoteException;
 
 }
