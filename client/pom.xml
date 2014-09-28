@@ -6,9 +6,9 @@
         <artifactId>sube-main</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
-    <artifactId>sube-server</artifactId>
+    <artifactId>sube-client</artifactId>
     <packaging>jar</packaging>
-    <name>TP Sube Server</name>
+    <name>TP Sube Client</name>
     <dependencies>
         <dependency>
             <groupId>itba-pod-2014-2c</groupId>
@@ -39,10 +39,6 @@
             <groupId>org.assertj</groupId>
             <artifactId>assertj-core</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.googlecode.junit-toolbox</groupId>
-            <artifactId>junit-toolbox</artifactId>
-        </dependency>
     </dependencies>
     <build>
         <plugins>
@@ -59,7 +55,7 @@
                         <configuration>
                             <transformers>
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>ar.edu.itba.pod.mmxivii.sube.server.Main</mainClass>
+                                    <mainClass>ar.edu.itba.pod.mmxivii.sube.client.Main</mainClass>
                                 </transformer>
                             </transformers>
                         </configuration>
