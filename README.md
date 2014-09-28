@@ -32,6 +32,7 @@ A partir de las directivas descriptas a continuación los grupos deben diseñar 
 - Los grupos deben implementar tanto el servicio como el cliente que se comunicará con el servicio. Luego todos los alumnos del curso ejecutarán el cliente para generar alta carga en el servicio y verificar la consistencia.
 - Los clientes que implementen deben considerar los errores que puede generar el servicio y manejarlos adecuadamente (reintentos, errors de validación). 
 - Para probar bien los clientes deben tener dos versiones/modos: uno interactivo y otro automático. El interactivo es para probar a mano el uso de una tarjeta, el otro es para generar carga (y deberían usarlo en sus pruebas)
+- Además del código tienen que preparar un informe breve sobre que fallas consideran y como las manejan. Tienen que manejar fallas y caídas.
 
 Prototipos de Interfaces Java
 -
