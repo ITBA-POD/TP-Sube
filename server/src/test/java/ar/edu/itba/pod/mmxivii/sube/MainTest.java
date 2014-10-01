@@ -1,10 +1,15 @@
 package ar.edu.itba.pod.mmxivii.sube;
 
 import ar.edu.itba.pod.mmxivii.sube.server.Main;
+import org.junit.Ignore;
 import org.junit.Test;
 
+@Ignore
 public class MainTest
 {
+
+	public static final String[] ARGS = {};
+
 	public MainTest() {}
 
 	@Test
@@ -15,7 +20,7 @@ public class MainTest
 			public void run()
 			{
 				try {
-					Main.main(new String[]{});
+					Main.main(ARGS);
 				} catch (Exception e) {
 					throw new RuntimeException(e);
 				}

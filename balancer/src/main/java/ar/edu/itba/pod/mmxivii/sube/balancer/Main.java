@@ -2,8 +2,10 @@ package ar.edu.itba.pod.mmxivii.sube.balancer;
 
 import ar.edu.itba.pod.mmxivii.sube.common.BaseMain;
 import ar.edu.itba.pod.mmxivii.sube.common.CardRegistry;
+import ar.edu.itba.pod.mmxivii.sube.common.Utils;
 
 import javax.annotation.Nonnull;
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.Scanner;
 
@@ -13,12 +15,12 @@ public class Main extends BaseMain
 {
 	private static Main main = null;
 
-	private Main(@Nonnull String[] args) throws RemoteException
+	private Main(@Nonnull String[] args) throws RemoteException, NotBoundException
 	{
 		super(args, DEFAULT_CLIENT_OPTIONS);
 		getRegistry();
 		setDelay();
-		final CardRegistry cardRegistry = lookupObject(CARD_REGISTRY_BIND);
+		final CardRegistry cardRegistry = Utils.lookupObject(CARD_REGISTRY_BIND);
 		final CardServiceRegistryImpl cardServiceRegistry = new CardServiceRegistryImpl();
 		bindObject(CARD_SERVICE_REGISTRY_BIND, cardServiceRegistry);
 

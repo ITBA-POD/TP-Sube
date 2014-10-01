@@ -4,10 +4,7 @@ import org.apache.commons.cli.*;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.rmi.AlreadyBoundException;
-import java.rmi.NotBoundException;
-import java.rmi.Remote;
-import java.rmi.RemoteException;
+import java.rmi.*;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
@@ -44,6 +41,7 @@ public class Utils
 	public static final String CARD_REGISTRY_BIND = "cardRegistry";
 	public static final String CARD_SERVICE_REGISTRY_BIND = "cardServiceRegistry";
 	public static final String CARD_CLIENT_BIND = "cardClient";
+	private static Registry rmiRegistry = null;
 
 	private Utils() {}
 
@@ -102,9 +100,9 @@ public class Utils
 	public static Registry getRegistry(@Nullable final String host, final int port)
 	{
 		try {
-			final Registry registry = LocateRegistry.getRegistry(host, port);
+			rmiRegistry = LocateRegistry.getRegistry(host, port);
 			System.out.println(String.format("Connected to RMI Registry on %s:%s", host, port));
-			return registry;
+			return rmiRegistry;
 		} catch (RemoteException e) {
 			System.err.println("Failed to get RMI Registry. Reason: " + e.getMessage());
 			System.exit(RMI_FAILED_EXIT_CODE);
@@ -125,11 +123,12 @@ public class Utils
 	}
 
 	@Nonnull
-	public static <T extends Remote> T lookupObject(@Nonnull Registry registry, @Nonnull final String name) throws NotBoundException
+	public static <T extends Remote> T lookupObject(@Nonnull final String name) throws NotBoundException
 	{
 		try {
+			if (rmiRegistry == null) throw new NullPointerException("RMI Registry not set");
 			//noinspection unchecked
-			return (T) registry.lookup(name);
+			return (T) rmiRegistry.lookup(name);
 		} catch (RemoteException e) {
 			System.err.println("Failed to lookup Remote Object in Registry. Reason: " + e.getMessage());
 			System.exit(RMI_FAILED_EXIT_CODE);
@@ -168,5 +167,10 @@ public class Utils
 	public static void delay()
 	{
 		if (!skipDelay) try { Thread.sleep(RANDOM.nextInt(MAX_DELTA) + MIN_DELAY); } catch (InterruptedException ignore) {}
+	}
+
+	public interface Invoke
+	{
+
 	}
 }

@@ -19,7 +19,7 @@ public abstract class BaseMain
 			new String[]{MAX_THREADS_O_S, MAX_THREADS_O_L, TRUE
 			}};
 	protected final CommandLine cmdLine;
-	protected Registry registry = null;
+	protected Registry rmiRegistry = null;
 	protected final Options options;
 
 	protected BaseMain(@Nonnull String[] args, @Nonnull String[][] optionsConfig)
@@ -40,7 +40,7 @@ public abstract class BaseMain
 		final String maxThreads = cmdLine.getOptionValue(MAX_THREADS_O_L, MAX_THREADS_O_D);
 		System.setProperty(MAX_THREADS_JAVA_PROPERTY, maxThreads);
 
-		registry = Utils.getRegistry(host, port);
+		rmiRegistry = Utils.getRegistry(host, port);
 	}
 
 	protected void createRegistry()
@@ -51,24 +51,14 @@ public abstract class BaseMain
 			System.setProperty(MAX_THREADS_JAVA_PROPERTY, maxThreads);
 		}
 
-		registry = Utils.createRegistry(port);
+		rmiRegistry = Utils.createRegistry(port);
 	}
 
 	protected void bindObject(@Nonnull final String name, @Nonnull final RemoteObject remote)
 	{
 		try {
-			registry.bind(name, remote);
+			rmiRegistry.bind(name, remote);
 		} catch (AlreadyBoundException | RemoteException e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@Nonnull
-	protected  <T extends Remote> T lookupObject(@Nonnull final String name)
-	{
-		try {
-			return Utils.lookupObject(registry, name);
-		} catch (NotBoundException e) {
 			throw new RuntimeException(e);
 		}
 	}
@@ -76,7 +66,7 @@ public abstract class BaseMain
 	protected void unbindObject(@Nonnull final String name)
 	{
 		try {
-			registry.unbind(name);
+			rmiRegistry.unbind(name);
 		} catch (RemoteException | NotBoundException e) {
 			System.err.println("Unbind Error: " + e.getMessage());
 			System.exit(-1);
