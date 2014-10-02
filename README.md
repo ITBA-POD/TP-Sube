@@ -35,6 +35,12 @@ A partir de las directivas descriptas a continuación los grupos deben diseñar 
 - Además del código tienen que preparar un informe breve sobre que fallas consideran y como las manejan. Tienen que manejar fallas y caídas.
 - **Los Servicios de Cache no pueden tener un punto único de falla. Todos los elementos deben poder bajarse y subirse.**
 - Miren CardClientImpl para un ejemplo de manejo de reconexiones cuando se cae el server.
+ 
+**Para que quede claro ustedes tienen que:**
+- Extender el código del módulo *client* actual para que genere mucha más operaciones de viajes y recargas. En lo posible en forma concurrente con muchas tarjetas.
+- Implementar un algoritmo de balanceo de requests en el módulo *balancer* para que distribuya la carga entre los nodos del servicio, y además soporte fallas en los nodos y en el server.
+- Implementar en el módulo *service* una forma en que muchos procesos corran en simultáneo, se distribuyan la carga y puedan agregarse y eliminarse nódos, sin afectar a los clientes. Pueden elegir la opción que quieran para cumplir con este requerimiento, por ejemplo hacer un cache distribuído, que sean todos réplicas con todos los datos, usar archivos compartidos, usar productos como redis o memcached, como quieran. Este es su trabajo de investigación y evaluación.
+ 
 
 Pruebas de verificación
 ------------------
