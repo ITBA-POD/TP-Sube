@@ -5,7 +5,7 @@ El objetivo de este trabajo práctico es implementar un servicio distribuído qu
 
 Este trabajo práctico se realizará en grupos de 3 o 4 personas, y contará con tres entregas: una presentación del diseño de la solución, una prueba inicial y una presentación final del sistema en clase. 
 
-**Cambio: La presentación de diseño se realizará el Lunes 29 de Septiembre. Debido al corte de luz en la Faculta el Lunes 6, la primera prueba del sistema el Lunes 20 de Octubre. La entrega final será el 27 de Octubre**
+**Cambio: La presentación de diseño se realizará el Lunes 29 de Septiembre. Debido al corte de luz en la Facultad el Lunes 6, la primera prueba del sistema el Lunes 20 de Octubre. La entrega final será el 27 de Octubre**
 
 Descripción del problema
 ------------------------
@@ -65,7 +65,7 @@ Se van a realizar las siguientes pruebas para verificar que se cumplan con los r
 - Se va a valorar mucho si se generan tests automáticos con JUnit, especialmente si son para probar concurrencia. (miren CardRegistryTest)
 - Se van a levantar 4/5 nodos en el cluster del servicio.
 - Se van a usar por lo menos 10 clientes del servicio.
-- No se van a hacer pruebas de fallas exhaustivas, ni hace falta para cualquier problema. Se van a probar las situaciones más comunes (bajada/subida de equipos programaticamente, tanto programadas como abruptas)
+- No se van a hacer pruebas de fallas exhaustivas, ni tienen que protegerse de ataques. Solo se van a probar las situaciones más comunes (bajada/subida de equipos programaticamente, tanto programadas como abruptas)
 
 Prototipos de Interfaces Java
 -----------------------------
