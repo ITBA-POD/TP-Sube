@@ -5,7 +5,7 @@ El objetivo de este trabajo práctico es implementar un servicio distribuído qu
 
 Este trabajo práctico se realizará en grupos de 3 o 4 personas, y contará con tres entregas: una presentación del diseño de la solución, una prueba inicial y una presentación final del sistema en clase. 
 
-**La presentación de diseño se realizará el Lunes 29 de Septiembre y la primera prueba del sistema el Lunes 6 de Octubre. La entrega final será el 20 de Octubre**
+**Cambio: La presentación de diseño se realizará el Lunes 29 de Septiembre. Debido al corte de luz en la Faculta el Lunes 6, la primera prueba del sistema el Lunes 20 de Octubre. La entrega final será el 27 de Octubre**
 
 Descripción del problema
 ------------------------
@@ -40,6 +40,14 @@ A partir de las directivas descriptas a continuación los grupos deben diseñar 
 - Extender el código del módulo *client* actual para que genere mucha más operaciones de viajes y recargas. En lo posible en forma concurrente con muchas tarjetas.
 - Implementar un algoritmo de balanceo de requests en el módulo *balancer* para que distribuya la carga entre los nodos del servicio, y además soporte fallas en los nodos y en el server.
 - Implementar en el módulo *service* una forma en que muchos procesos corran en simultáneo, se distribuyan la carga y puedan agregarse y eliminarse nódos, sin afectar a los clientes. Pueden elegir la opción que quieran para cumplir con este requerimiento, por ejemplo hacer un cache distribuído, que sean todos réplicas con todos los datos, usar archivos compartidos, usar productos como redis o memcached, como quieran. Este es su trabajo de investigación y evaluación.
+
+Entrega
+-------
+La entrega tiene dos componentes: Fuentes e Informe
+- Se deben entregar los fuentes estructurados como proyectos de Maven (mantener en lo posible la estructura existente en GitHub).
+- Los fuentes deben compilar sin errores con Maven (vamos a ejecutar *mvn package* en la raíz del proyecto y debe armar los jars sin errores)
+- Tienen que entregar un zip con los fuentes (es necesario como testigo de la entrega), pero no hay problema si adicionalmente nos apuntan a un repositorio externo.
+- 
  
 
 Pruebas de verificación
