@@ -35,6 +35,7 @@ A partir de las directivas descriptas a continuación los grupos deben diseñar 
 - Además del código tienen que preparar un informe breve sobre que fallas consideran y como las manejan. Tienen que manejar fallas y caídas.
 - **Los Servicios de Cache no pueden tener un punto único de falla. Todos los elementos deben poder bajarse y subirse.**
 - Miren CardClientImpl para un ejemplo de manejo de reconexiones cuando se cae el server.
+- Para mejor soportar fallas en los procesos se decidió separar el registro de RMI en una aplicación separada: rmiregistr. Esta aplicación está incluída en el JDK y se debe ejecutar agregando al CLASSPATH el módulo common para poder cargar las interfaces.
  
 **Para que quede claro ustedes tienen que:**
 - Extender el código del módulo *client* actual para que genere mucha más operaciones de viajes y recargas. En lo posible en forma concurrente con muchas tarjetas.
@@ -47,7 +48,9 @@ La entrega tiene dos componentes: Fuentes e Informe
 - Se deben entregar los fuentes estructurados como proyectos de Maven (mantener en lo posible la estructura existente en GitHub).
 - Los fuentes deben compilar sin errores con Maven (vamos a ejecutar *mvn package* en la raíz del proyecto y debe armar los jars sin errores)
 - Tienen que entregar un zip con los fuentes (es necesario como testigo de la entrega), pero no hay problema si adicionalmente nos apuntan a un repositorio externo.
-- 
+- Además queremos que escriban un pequeño informe con la definición de sus niveles de servicio y cuales son las decisiones de diseño más importantes que tuvieron que tomar.
+- El informe tiene dos secciones: la descripción de los niveles de servicio que tiene su software, y la una lista de decisiones de diseño con una explicación breve de la decisión y su justificación
+- Un ejemplo de nivel de servicio sería describir el comportamiento cuando se cae un server: reintentos o códigos de error devueltos al cliente.
  
 
 Pruebas de verificación
@@ -59,6 +62,9 @@ Se van a realizar las siguientes pruebas para verificar que se cumplan con los r
 - Se va a bajar el Server y el servicio debe seguir funcionando en forma limitada (no hay nuevas tarjetas, solo las existente) 
 - Vamos a tratar de correr más de diez clientes simultáneos automáticos y otro tanto interactivos
 - Se va a valorar mucho si se generan tests automáticos con JUnit, especialmente si son para probar concurrencia. (miren CardRegistryTest)
+- Se van a levantar 4/5 nodos en el cluster del servicio.
+- Se van a usar por lo menos 10 clientes del servicio.
+- No se van a hacer pruebas de fallas exhaustivas, ni hace falta para cualquier problema. Se van a probar las situaciones más comunes (bajada/subida de equipos programaticamente, tanto programadas como abruptas)
 
 Prototipos de Interfaces Java
 -----------------------------
