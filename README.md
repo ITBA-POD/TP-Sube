@@ -21,6 +21,7 @@ Descripción del problema
  - el monto de las recargas no puede ser mayor a 100
  - los gastos no pueden ser mayores a 100 y menores a 1
  - las recargas y gastos son montos con centavos (no puede ser 0.55555)
+- *Las operaciones sobre una misma tarjeta siempre van a ser secuenciales, no se deben hacer operaciones en paralello.*
 
 Alcance
 -------
